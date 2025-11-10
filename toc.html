@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>📋 イオン結晶クイズ 問題一覧</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .info {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .link {
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+    .correct { background: #d0f5d0; }     /* 緑：正解 */
+    .wrong   { background: #f8d0d0; }     /* 赤：不正解 */
+    .unanswered { background: #d0e0ff; }  /* 青：未回答 */
+    .link:hover { opacity: 0.8; }
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 40px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>📋 イオン結晶クイズ 問題一覧</h1>
+
+  <div class="info" id="summary">
+    <span style="background: #d0f5d0; padding: 5px 10px; border-radius: 5px; margin-right: 10px;">✅ 正解</span>
+    <span style="background: #f8d0d0; padding: 5px 10px; border-radius: 5px; margin-right: 10px;">❌ 不正解</span>
+    <span style="background: #d0e0ff; padding: 5px 10px; border-radius: 5px;">🟦 未回答</span>
+    <br><br>
+    <strong id="accuracy">正解率: 計算中…</strong>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <a href="index.html" class="back">← クイズ画面に戻る</a>
+
+  <script>
+    const grid = document.getElementById("grid");
+    let correctCount = 0;
+    let wrongCount = 0;
+
+    for (let i = 1; i <= 35; i++) {
+      const status = localStorage.getItem("q" + i);
+      let className = "unanswered";
+      if (status === "correct") {
+        className = "correct";
+        correctCount++;
+      } else if (status === "wrong") {
+        className = "wrong";
+        wrongCount++;
+      }
+
+      const div = document.createElement("div");
+      div.className = "link " + className;
+      div.textContent = "Q" + i;
+      div.onclick = () => location.href = "index.html#q" + i;
+      grid.appendChild(div);
+    }
+
+    const totalAnswered = correctCount + wrongCount;
+    const accuracy = totalAnswered > 0 ? Math.round((correctCount / totalAnswered) * 100) : 0;
+    document.getElementById("accuracy").textContent = `正解率: ${accuracy}%（${correctCount}問正解 / ${totalAnswered}問回答）`;
+  </script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>イオン結晶クイズ</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; margin-top: 60px; background: #f9f9f9; }
+    .question { margin-bottom: 30px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+    button { margin-right: 10px; padding: 6px 12px; font-size: 14px; }
+    #missed { position: fixed; top: 70px; right: 20px; background: #fff; padding: 10px; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+    .link { cursor: pointer; color: blue; text-decoration: underline; margin-right: 5px; }
+
+    /* 固定ヘッダー */
+    #header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #eee;
+      padding: 10px;
+      text-align: center;
+      border-bottom: 1px solid #ccc;
+      z-index: 1000;
+    }
+    #header button {
+      font-size: 16px;
+      padding: 5px 15px;
+    }
+  </style>
+</head>
+<body>
+  <div id="header">
+    <button onclick="location.href='toc.html'">📋 問題一覧へ</button>
+  </div>
+
+  <h1>イオン結晶クイズ</h1>
+  <p>陽イオンと陰イオンの組み合わせからできる化学式を選びましょう。正誤と解説が表示されます。</p>
+
+  <div id="missed"><strong>❌ 間違えた問題:</strong> <span id="missedList"></span></div>
+
+  <script>
+    const missed = new Set();
+
+    function showResult(isCorrect, qNum, explanation) {
+      const result = isCorrect ? "correct" : "wrong";
+      localStorage.setItem("q" + qNum, result);
+
+      if (isCorrect) {
+        alert("正解！\n\n" + explanation);
+      } else {
+        alert("不正解\n\n正しくは：\n" + explanation);
+        markWrong(qNum);
+      }
+    }
+
+    function markWrong(qNum) {
+      if (!missed.has(qNum)) {
+        missed.add(qNum);
+        const span = document.getElementById("missedList");
+        const link = document.createElement("span");
+        link.className = "link";
+        link.textContent = "Q" + qNum;
+        link.onclick = () => document.getElementById("q" + qNum).scrollIntoView();
+        span.appendChild(link);
+      }
+    }
+  </script>
+
+  <h1>イオン結晶クイズ（2択・30問）</h1>
+
+ <div class="question" id="q1">
+  <p><strong>Q1.</strong> ナトリウムイオンと塩化物イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 1, 'Na⁺とCl⁻は1:1で結合し、NaClになります。')">A. NaCl</button>
+  <button onclick="showResult(false, 1, 'Na⁺とCl⁻は1:1で結合し、NaClになります。')">B. Na₂Cl</button>
+</div>
+
+<div class="question" id="q2">
+  <p><strong>Q2.</strong> マグネシウムイオンと塩化物イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 2, 'Mg²⁺とCl⁻は1:2で結合し、MgCl₂になります。')">A. MgCl₂</button>
+  <button onclick="showResult(false, 2, 'Mg²⁺とCl⁻は1:2で結合し、MgCl₂になります。')">B. Mg₂Cl</button>
+</div>
+
+<div class="question" id="q3">
+  <p><strong>Q3.</strong> カルシウムイオンと硫酸イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 3, 'Ca²⁺とSO₄²⁻は1:1で結合し、CaSO₄になります。')">A. CaSO₄</button>
+  <button onclick="showResult(false, 3, 'Ca²⁺とSO₄²⁻は1:1で結合し、CaSO₄になります。')">B. Ca₂SO₄</button>
+</div>
+
+<div class="question" id="q4">
+  <p><strong>Q4.</strong> アルミニウムイオンと酸化物イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 4, 'Al³⁺とO²⁻は2:3で結合し、Al₂O₃になります。')">A. Al₂O₃</button>
+  <button onclick="showResult(false, 4, 'Al³⁺とO²⁻は2:3で結合し、Al₂O₃になります。')">B. AlO</button>
+</div>
+
+<div class="question" id="q5">
+  <p><strong>Q5.</strong> 鉄(III)イオンと塩化物イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 5, 'Fe³⁺とCl⁻は1:3で結合し、FeCl₃になります。')">A. FeCl₃</button>
+  <button onclick="showResult(false, 5, 'Fe³⁺とCl⁻は1:3で結合し、FeCl₃になります。')">B. Fe₂Cl</button>
+</div>
+
+<div class="question" id="q6">
+  <p><strong>Q6.</strong> 鉄(II)イオンと酸化物イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 6, 'Fe²⁺とO²⁻は1:1で結合し、FeOになります。')">A. FeO</button>
+  <button onclick="showResult(false, 6, 'Fe²⁺とO²⁻は1:1で結合し、FeOになります。')">B. Fe₂O₃</button>
+</div>
+
+<div class="question" id="q7">
+  <p><strong>Q7.</strong> 銅(II)イオンと塩化物イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 7, 'Cu²⁺とCl⁻は1:2で結合し、CuCl₂になります。')">A. CuCl₂</button>
+  <button onclick="showResult(false, 7, 'Cu²⁺とCl⁻は1:2で結合し、CuCl₂になります。')">B. Cu₂Cl</button>
+</div>
+
+<div class="question" id="q8">
+  <p><strong>Q8.</strong> アルミニウムイオンと硫化物イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 8, 'Al³⁺とS²⁻は2:3で結合し、Al₂S₃になります。')">A. Al₂S₃</button>
+  <button onclick="showResult(false, 8, 'Al³⁺とS²⁻は2:3で結合し、Al₂S₃になります。')">B. AlS</button>
+</div>
+
+<div class="question" id="q9">
+  <p><strong>Q9.</strong> 鉛(II)イオンと臭化物イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 9, 'Pb²⁺とBr⁻は1:2で結合し、PbBr₂になります。')">A. PbBr₂</button>
+  <button onclick="showResult(false, 9, 'Pb²⁺とBr⁻は1:2で結合し、PbBr₂になります。')">B. Pb₂Br</button>
+</div>
+
+<div class="question" id="q10">
+  <p><strong>Q10.</strong> 銀イオンとヨウ化物イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 10, 'Ag⁺とI⁻は1:1で結合し、AgIになります。')">A. AgI</button>
+  <button onclick="showResult(false, 10, 'Ag⁺とI⁻は1:1で結合し、AgIになります。')">B. Ag₂I</button>
+</div>
+
+<div class="question" id="q11">
+  <p><strong>Q11.</strong> バリウムイオンと炭酸イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 11, 'Ba²⁺とCO₃²⁻は1:1で結合し、BaCO₃になります。')">A. BaCO₃</button>
+  <button onclick="showResult(false, 11, 'Ba²⁺とCO₃²⁻は1:1で結合し、BaCO₃になります。')">B. Ba₂CO₃</button>
+</div>
+
+<div class="question" id="q12">
+  <p><strong>Q12.</strong> 鉄(III)イオンと炭酸イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 12, 'Fe³⁺とCO₃²⁻は2:3で結合し、Fe₂(CO₃)₃になります。')">A. Fe₂(CO₃)₃</button>
+  <button onclick="showResult(false, 12, 'Fe³⁺とCO₃²⁻は2:3で結合し、Fe₂(CO₃)₃になります。')">B. Fe(CO₃)₂</button>
+</div>
+
+<div class="question" id="q13">
+  <p><strong>Q13.</strong> クロム(III)イオンと酸化物イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 13, 'Cr³⁺とO²⁻は2:3で結合し、Cr₂O₃になります。')">A. Cr₂O₃</button>
+  <button onclick="showResult(false, 13, 'Cr³⁺とO²⁻は2:3で結合し、Cr₂O₃になります。')">B. CrO</button>
+</div>
+
+<div class="question" id="q14">
+  <p><strong>Q14.</strong> ガリウムイオンと硝酸イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 14, 'Ga³⁺とNO₃⁻は1:3で結合し、Ga(NO₃)₃になります。')">A. Ga(NO₃)₃</button>
+  <button onclick="showResult(false, 14, 'Ga³⁺とNO₃⁻は1:3で結合し、Ga(NO₃)₃になります。')">B. Ga₂(NO₃)</button>
+</div>
+
+<div class="question" id="q15">
+  <p><strong>Q15.</strong> タリウム(I)イオンと塩化物イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 15, 'Tl⁺とCl⁻は1:1で結合し、TlClになります。')">A. TlCl</button>
+  <button onclick="showResult(false, 15, 'Tl⁺とCl⁻は1:1で結合し、TlClになります。')">B. Tl₂Cl</button>
+</div>
+
+<div class="question" id="q16">
+  <p><strong>Q16.</strong> カリウムイオンと硝酸イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 16, 'K⁺とNO₃⁻は1:1で結合し、KNO₃になります。')">A. KNO₃</button>
+  <button onclick="showResult(false, 16, 'K⁺とNO₃⁻は1:1で結合し、KNO₃になります。')">B. K₂NO₃</button>
+</div>
+
+<div class="question" id="q17">
+  <p><strong>Q17.</strong> アンモニウムイオンと硫酸イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 17, '(NH₄)₂SO₄はNH₄⁺が2個、SO₄²⁻が1個で中性になります。')">A. (NH₄)₂SO₄</button>
+  <button onclick="showResult(false, 17, '(NH₄)₂SO₄はNH₄⁺が2個、SO₄²⁻が1個で中性になります。')">B. NH₄SO₄</button>
+</div>
+
+<div class="question" id="q18">
+  <p><strong>Q18.</strong> ストロンチウムイオンと塩化物イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 18, 'Sr²⁺とCl⁻は1:2で結合し、SrCl₂になります。')">A. SrCl₂</button>
+  <button onclick="showResult(false, 18, 'Sr²⁺とCl⁻は1:2で結合し、SrCl₂になります。')">B. Sr₂Cl</button>
+</div>
+
+<div class="question" id="q19">
+  <p><strong>Q19.</strong> 銅(I)イオンと酸化物イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 19, 'Cu⁺とO²⁻は2:1で結合し、Cu₂Oになります。')">A. Cu₂O</button>
+  <button onclick="showResult(false, 19, 'Cu⁺とO²⁻は2:1で結合し、Cu₂Oになります。')">B. CuO</button>
+</div>
+
+<div class="question" id="q20">
+  <p><strong>Q20.</strong> ベリリウムイオンと硫化物イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 20, 'Be²⁺とS²⁻は1:1で結合し、BeSになります。')">A. BeS</button>
+  <button onclick="showResult(false, 20, 'Be²⁺とS²⁻は1:1で結合し、BeSになります。')">B. Be₂S₃</button>
+</div>
+
+<div class="question" id="q21">
+  <p><strong>Q21.</strong> 鉄(II)イオンと硫酸イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 21, 'Fe²⁺とSO₄²⁻は1:1で結合し、FeSO₄になります。')">A. FeSO₄</button>
+  <button onclick="showResult(false, 21, 'Fe²⁺とSO₄²⁻は1:1で結合し、FeSO₄になります。')">B. Fe₂(SO₄)₃</button>
+</div>
+
+<div class="question" id="q22">
+  <p><strong>Q22.</strong> 鉄(III)イオンと硫酸イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 22, 'Fe³⁺とSO₄²⁻は2:3で結合し、Fe₂(SO₄)₃になります。')">A. Fe₂(SO₄)₃</button>
+  <button onclick="showResult(false, 22, 'Fe³⁺とSO₄²⁻は2:3で結合し、Fe₂(SO₄)₃になります。')">B. FeSO₄</button>
+</div>
+
+<div class="question" id="q23">
+  <p><strong>Q23.</strong> 銅(II)イオンと酸化物イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 23, 'Cu²⁺とO²⁻は1:1で結合し、CuOになります。')">A. CuO</button>
+  <button onclick="showResult(false, 23, 'Cu²⁺とO²⁻は1:1で結合し、CuOになります。')">B. Cu₂O</button>
+</div>
+
+<div class="question" id="q24">
+  <p><strong>Q24.</strong> カルシウムイオンと炭酸イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 24, 'Ca²⁺とCO₃²⁻は1:1で結合し、CaCO₃になります。')">A. CaCO₃</button>
+  <button onclick="showResult(false, 24, 'Ca²⁺とCO₃²⁻は1:1で結合し、CaCO₃になります。')">B. Ca₂CO₃</button>
+</div>
+
+<div class="question" id="q25">
+  <p><strong>Q25.</strong> 銀イオンと塩化物イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 25, 'Ag⁺とCl⁻は1:1で結合し、AgClになります。')">A. AgCl</button>
+  <button onclick="showResult(false, 25, 'Ag⁺とCl⁻は1:1で結合し、AgClになります。')">B. Ag₂Cl</button>
+</div>
+
+<div class="question" id="q26">
+  <p><strong>Q26.</strong> リチウムイオンと塩化物イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 26, 'Li⁺とCl⁻は1:1で結合し、LiClになります。')">A. LiCl</button>
+  <button onclick="showResult(false, 26, 'Li⁺とCl⁻は1:1で結合し、LiClになります。')">B. Li₂Cl</button>
+</div>
+
+<div class="question" id="q27">
+  <p><strong>Q27.</strong> アンモニウムイオンと硝酸イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 27, 'NH₄⁺とNO₃⁻は1:1で結合し、NH₄NO₃になります。')">A. NH₄NO₃</button>
+  <button onclick="showResult(false, 27, 'NH₄⁺とNO₃⁻は1:1で結合し、NH₄NO₃になります。')">B. (NH₄)₂NO₃</button>
+</div>
+
+<div class="question" id="q28">
+  <p><strong>Q28.</strong> 鉛(II)イオンと硫化物イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 28, 'Pb²⁺とS²⁻は1:1で結合し、PbSになります。')">A. PbS</button>
+  <button onclick="showResult(false, 28, 'Pb²⁺とS²⁻は1:1で結合し、PbSになります。')">B. Pb₂S₃</button>
+</div>
+
+<div class="question" id="q29">
+  <p><strong>Q29.</strong> バリウムイオンと硫酸イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 29, 'Ba²⁺とSO₄²⁻は1:1で結合し、BaSO₄になります。')">A. BaSO₄</button>
+  <button onclick="showResult(false, 29, 'Ba²⁺とSO₄²⁻は1:1で結合し、BaSO₄になります。')">B. Ba₂SO₄</button>
+</div>
+
+<div class="question" id="q30">
+  <p><strong>Q30.</strong> カリウムイオンと酸化物イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 30, 'K⁺とO²⁻は2:1で結合し、K₂Oになります。')">A. K₂O</button>
+  <button onclick="showResult(false, 30, 'K⁺とO²⁻は2:1で結合し、K₂Oになります。')">B. KO</button>
+</div>
+
+<div class="question" id="q31">
+  <p><strong>Q31.</strong> スズ(IV)イオンと塩化物イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 31, 'Sn⁴⁺とCl⁻は1:4で結合し、SnCl₄になります。')">A. SnCl₄</button>
+  <button onclick="showResult(false, 31, 'Sn⁴⁺とCl⁻は1:4で結合し、SnCl₄になります。')">B. SnCl₂</button>
+</div>
+
+<div class="question" id="q32">
+  <p><strong>Q32.</strong> アルミニウムイオンと炭酸イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 32, 'Al³⁺とCO₃²⁻は2:3で結合し、Al₂(CO₃)₃になります。')">A. Al₂(CO₃)₃</button>
+  <button onclick="showResult(false, 32, 'Al³⁺とCO₃²⁻は2:3で結合し、Al₂(CO₃)₃になります。')">B. Al(CO₃)₃</button>
+</div>
+
+<div class="question" id="q33">
+  <p><strong>Q33.</strong> 銅(I)イオンと塩化物イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 33, 'Cu⁺とCl⁻は1:1で結合し、CuClになります。')">A. CuCl</button>
+  <button onclick="showResult(false, 33, 'Cu⁺とCl⁻は1:1で結合し、CuClになります。')">B. CuCl₂</button>
+</div>
+
+<div class="question" id="q34">
+  <p><strong>Q34.</strong> マグネシウムイオンと酸化物イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 34, 'Mg²⁺とO²⁻は1:1で結合し、MgOになります。')">A. MgO</button>
+  <button onclick="showResult(false, 34, 'Mg²⁺とO²⁻は1:1で結合し、MgOになります。')">B. Mg₂O₃</button>
+</div>
+
+<div class="question" id="q35">
+  <p><strong>Q35.</strong> カルシウムイオンと塩化物イオンからできる化学式は？</p>
+  <button onclick="showResult(true, 35, 'Ca²⁺とCl⁻は1:2で結合し、CaCl₂になります。')">A. CaCl₂</button>
+  <button onclick="showResult(false, 35, 'Ca²⁺とCl⁻は1:2で結合し、CaCl₂になります。')">B. Ca₂Cl</button>
+</div>
+</body>
+</html>
